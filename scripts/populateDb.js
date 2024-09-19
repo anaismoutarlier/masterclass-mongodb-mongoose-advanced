@@ -78,7 +78,15 @@ const populateDb = async () => {
   await Comment.deleteMany();
   console.log("Database connected.");
 
-  const createdUsers = await User.create(users);
+  const createdUsers = await User.create(
+    users.map(user => {
+      user.createdAt = user.dateCreated;
+
+      return user;
+    }),
+    { timestamps: false }
+  );
+  await User.updateMany({});
   console.log("User docs created.");
   const userIds = createdUsers.map(({ _id }) => _id);
   let postsToCreate = await Promise.all(

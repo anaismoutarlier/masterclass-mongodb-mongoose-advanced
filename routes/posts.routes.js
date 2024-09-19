@@ -5,8 +5,8 @@ const router = Router();
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  const post = await Post.findById(id).populate("comments");
-  console.log(post, post.comments);
+  const post = await Post.findOne({ _id: id });
+  //   console.log(post, post.comments);
 
   res.json({ result: true, post });
 });

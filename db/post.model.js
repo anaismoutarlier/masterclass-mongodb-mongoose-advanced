@@ -18,4 +18,11 @@ PostSchema.virtual("comments", {
   foreignField: "post",
 });
 
+PostSchema.pre("findOne", function (next) {
+  // this = request / query
+  this.populate("comments");
+  console.log(this);
+  next();
+});
+
 module.exports = model("posts", PostSchema);
